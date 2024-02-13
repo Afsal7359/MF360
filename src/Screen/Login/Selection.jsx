@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import {Picker} from "@react-native-picker/picker"
 import { TouchableOpacity } from 'react-native'
 import Color from '../../Components/Styling Comp/Color'
+import image1 from '../../../assets/distributionimg1.png'
 
 const Selection = ({navigation}) => {
     const [District, setDistrict] = useState('option1');
@@ -10,7 +11,7 @@ const Selection = ({navigation}) => {
     <ScrollView>
     <View style={styles.topcircle}/>
     <View style={styles.imageview}>
-      {/* <Image source={image} style={styles.image}/> */}
+      <Image source={image1} style={styles.image}/>
     </View>
     <View style={styles.district}> 
       <Text style={styles.districttext}>District</Text>
@@ -25,11 +26,11 @@ const Selection = ({navigation}) => {
     <View style={styles.area}> 
       <Text style={styles.areatext}>Area</Text>
       <View style={styles.areapicker}>
-      <Picker  selectedValue={District} onValueChange={(item) =>setDistrict(item)}>
-      <Picker.Item label="Select District" value="option1" />
-      <Picker.Item label="Kannur" value="option2" />
-      <Picker.Item label="Kasargod" value="option3" />
-      </Picker>
+        <Picker  selectedValue={District} onValueChange={(item) =>setDistrict(item)}>
+          <Picker.Item label="Select District" value="option1" />
+          <Picker.Item label="Kannur" value="option2" />
+          <Picker.Item label="Kasargod" value="option3" />
+        </Picker>
       </View>
     </View>
     <View style={styles. distributor}> 

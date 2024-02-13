@@ -4,15 +4,24 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ScreenNavigations from './src/Components/Navigations/ScreenNavigations';
+import QRScanner from './src/Screen/Dashboard/QRScanner';
+import Orders from './src/Screen/Orders/Orders';
+import Color from './src/Components/Styling Comp/Color';
+import store from './src/Redux/Store';
 
 const Tab = createBottomTabNavigator();
 
-const App = () => {
+const App = ({navigation}) => {
   return (
+   
       <NavigationContainer>
          <Tab.Navigator>
+        
            <Tab.Screen name="Home" component={ScreenNavigations} options={{headerShown:false,tabBarIcon: ({ color, size }) => (
            <Icon name="dashboard" color={color} size={size} />
+             ),}}/>
+             <Tab.Screen name="Qrscanner" component={QRScanner} options={{headerShown:false,tabBarIcon: ({ color, size }) => (
+           <Icon name="camera" color={color} size={size} />
              ),}}/>
          </Tab.Navigator>
       </NavigationContainer>

@@ -7,22 +7,46 @@ import Color from '../Styling Comp/Color';
 import NewOrder from '../../Screen/Orders/NewOrder';
 import AllProducts from '../../Screen/Products/AllProducts';
 import Orderhistory from '../../Screen/Orders/Orderhistory';
-
-
-
+import Cart from '../../Screen/Orders/Cart';
+import Orders from '../../Screen/Orders/Orders';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Store from '../../Redux/Store';
+import { Provider } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 const ScreenNavigations = () => {
   return (
+    <Provider store={Store}>
   <Stack.Navigator>
     <Stack.Screen name='login' component={Login} options={{headerShown:false}}/>
     <Stack.Screen name='Selection' component={Selection} options={{headerShown:false}}/>
+    <Stack.Screen name='cart' component={Cart} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='Dashboard' component={Home} options={{headerShown:false}}/>
     <Stack.Screen name='creations' component={Creations} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='New Order' component={NewOrder} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='All Products' component={AllProducts} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='Order History' component={Orderhistory} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
+    <Stack.Screen
+        name="ssss"
+        component={Orders}
+        options={({ navigation }) => ({
+          headerTitle: 'New Order',
+          headerStyle: {
+            backgroundColor: Color.maincolor,
+          },
+          headerRight: () => (
+            <Icon
+              name="shopping-cart"
+              size={30}
+              color="black"
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.navigate('cart')}
+            />
+          ),
+        })}
+      />
 </Stack.Navigator>
+</Provider>
   )
 }
 

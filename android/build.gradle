@@ -15,6 +15,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:your_android_gradle_version_here")
         classpath("com.facebook.react:react-native-gradle-plugin:your_react_native_gradle_version_here")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:your_kotlin_version_here")
+        
     }
 }
 

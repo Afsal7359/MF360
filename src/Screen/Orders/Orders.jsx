@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Qrcode = () => {
+const Orders = () => {
   return (
     <View>
-      <Text>Qrcode</Text>
+      <Text>Orders</Text>
     </View>
   )
 }
 
-export default Qrcode
+export default Orders
 
 const styles = StyleSheet.create({})
