@@ -41,75 +41,75 @@ const Orderhistory = () => {
       </View>
       <View style={styles.Itemhead}>
             <Text style={styles.texthead}>Medmix</Text>
-            <Text style={styles.texthead}>250</Text>
+            <Text style={styles.texthead} >250</Text>
             <Text style={styles.texthead}>15</Text>
         </View>
       <ScrollView style={{marginBottom:85}}>
        
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
         <View style={styles.Itemview}>
-            <Text>Medmix</Text>
-            <Text>250</Text>
-            <Text>15</Text>
+            <Text style={styles.text}>Medmix</Text>
+            <Text  style={styles.text}>250</Text>
+            <Text  style={styles.text}>15</Text>
         </View>
     </ScrollView>
     </View>
@@ -119,6 +119,9 @@ const Orderhistory = () => {
 export default Orderhistory
 
 const styles = StyleSheet.create({
+  text:{
+    color:Color.Black,
+  },
   container: {
     backgroundColor:Color.Grey,
     justifyContent:"space-around",
@@ -158,6 +161,7 @@ const styles = StyleSheet.create({
   },
   texthead:{
     fontWeight:"900",
+    color:Color.Black
   },
 
 })

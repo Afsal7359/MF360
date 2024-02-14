@@ -5,7 +5,27 @@ const data = [
       stock: 150,
     },
     {
-      name: 'pears',
+      name: 'medmix 30.g',
+      price: 95,
+      stock: 150,
+    },
+    {
+      name: 'medmix 90.g',
+      price: 95,
+      stock: 150,
+    },
+    {
+      name: 'pears 30.g',
+      price: 65,
+      stock: 150,
+    },
+    {
+      name: 'pears 90.g',
+      price: 65,
+      stock: 150,
+    },
+    {
+      name: 'pears 120.g',
       price: 65,
       stock: 150,
     },

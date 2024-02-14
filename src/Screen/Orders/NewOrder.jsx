@@ -1,84 +1,64 @@
-import { View, Text, StyleSheet, ScrollView, Touchable,SafeAreaView,Button,Modal, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, ScrollView, Touchable,SafeAreaView,Button,Modal, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SearchBar } from 'react-native-elements'
 import data from '../../Components/Styling Comp/Data'
 import Color from '../../Components/Styling Comp/Color'
 import { useDispatch } from 'react-redux'
+import { addToCart } from '../../Redux/Cartreducer'
+import { Picker } from '@react-native-picker/picker'
 
 const NewOrder = ({navigation}) => {
+  const [filteredData, setFilteredData] = useState(data);
+  const [District, setDistrict] = useState('option1');
   const Data = data && data ? data : [];
   const [search,setSearch]=useState('');
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const addToCart = (item) => {
+  const Addtocart = (item) => {
     console.log(item);
-    dispatch({ type: 'ADD_TO_CART', payload: item });
+    dispatch(addToCart(item));
+    ToastAndroid.show(`${item.name}  Added to cart`,500 , ToastAndroid.CENTER)
   };
+    useEffect(() => {
+      // Update filtered data whenever search text changes
+      filterData();
+    }, [search, data]);
+
+    const filterData = () => {
+      const filtered = data.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredData(filtered);
+    };
+
+  
   return (
     <SafeAreaView>
-    <Text style={styles.selectedtext}>Selected Item</Text>
+      <View  style={styles.pickerView}>
+      <Picker style={{color:Color.Black}} value={District}   onValueChange={(item) =>setDistrict(item)}>
+            <Picker.Item label="Select Shop" value="option1" />
+            <Picker.Item label="Kannur fsdf sdfsaf sfsdfdsf fsfds dsfdsfds fdsfdfsf fgdsfds fdsefds fdsfs dsfds fdsf" value="option2" />
+            <Picker.Item label="Kasargod" value="option3" />
+        </Picker>
+      </View>
   
-    <ScrollView style={styles.selecteditemscroll} showsVerticalScrollIndicator={false}>
-      <View style={{alignItems:"center"}}>
-    <View style={styles.headingview}>
-        <Text style={styles.headingtext}>ITEM(Price)</Text>
-        <Text style={styles.headingtext}>Quantity</Text>
-        <Text style={styles.headingtext}>Total Price</Text>
-      </View>
-      
-      {data.map((item, index) => (
-      <View key={index} style={styles.selectitemview}>
-        <Text>Name: {item.name}</Text>
-        <Text>Price: {item.price}</Text>
-        <Text>Stock: {item.stock}</Text>
-      </View>
-    ))}
-    </View>
-    </ScrollView>
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={showModal}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}>
-          <View style={styles.modal}>
-            <Text style={styles.text}>Modal is open</Text>
-            <TouchableOpacity
-            style={{marginTop:2,marginRight:0}}
-              onPress={() => {
-                setShowModal(!showModal);
-              }}><Text>Close</Text></TouchableOpacity>
-          </View>
-        </Modal>
-        <Button
-          title="Click To Open Modal"
-          onPress={() => {
-            setShowModal(!showModal);
-          }}
-        />
-      </View>
-    </SafeAreaView>
-     {/* <TouchableOpacity style={styles.buttonContainer}><Text style={styles.buttonText}> View All</Text></TouchableOpacity> */}
     <View style={{alignItems:"center"}}>
     <SearchBar
       placeholder="Type Here..."
-      onChangeText={(value)=>setSearch(value)}
+       onChangeText={(value) => setSearch(value)}
        value={search} round
   
        containerStyle={{
-         backgroundColor: 'transparent', // Set your desired background color
-         borderBottomColor: 'transparent', // Hide the border
-         borderTopColor: 'transparent', // Hide the border
+         backgroundColor: 'transparent', 
+         borderBottomColor: 'transparent', 
+         borderTopColor: 'transparent',
          paddingHorizontal:30,
         
        }}
        inputContainerStyle={{
-         backgroundColor: Color.whitecolor, // Set your desired input background color
-         borderRadius: 10, // Set your desired input border radius
-         height: 40, // Set your desired input height
+         backgroundColor: Color.whitecolor, 
+         borderRadius: 10,
+         height: 40, 
          width:300,
          shadowColor: '#000',
          shadowOffset: { width: 0, height: 2 },
@@ -88,52 +68,34 @@ const NewOrder = ({navigation}) => {
          
        }}
        inputStyle={{
-         color: '#000', // Set your desired input text color
+         color: '#000',
        }}
-       placeholderTextColor="#999" // Set your desired placeholder text color
+       placeholderTextColor="#999" 
      />
-    
     </View>
     
-    <TouchableOpacity onPress={()=>navigation.navigate('cart')}><Text>View Cart </Text></TouchableOpacity>
+   
     <ScrollView style={styles.itemScrollview}>
     <View style={styles.productcontainer}>
-    {data.map((item, index) => (
-      <TouchableOpacity key={index} style={styles.itemView} onPress={addToCart(item)}>
-        <Text style={styles.itemText}>Name: {item.name}</Text>
-        <Text>Price: {item.price}</Text>
-        <Text>Stock: {item.stock}</Text>
+    {filteredData.map((item, index) => (
+      <TouchableOpacity key={index} style={styles.itemView} onPress={()=>{Addtocart(item)}}>
+        <Text style={styles.itemText}> {item.name}</Text>
+        <Text style={styles.itemText}>₹ {item.price}</Text>
+        <Text style={styles.itemText}>Stock: {item.stock}</Text>
       </TouchableOpacity>
     ))}
   </View>   
     </ScrollView>
     
-  <TouchableOpacity style={styles.savebtn}>
-    <Text>Save   ₹.20000</Text>
+  <TouchableOpacity style={styles.savebtn} onPress={()=>navigation.navigate('cart')}>
+    <Text>Save  </Text>
   </TouchableOpacity>
   </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    marginTop: 5,
-    
-  },
-  modal: {
-    alignItems: 'center',
-    backgroundColor: Color.maincolor,
-    height:200,
-    width:295,
-    borderRadius:10,
-    justifyContent:"center",
-    marginHorizontal:"10%"
-  },
-  text: {
-    color: '#3f2949',
-    marginTop: 10,
+  itemText:{
+    color:Color.Black
   },
   savebtn:{
     backgroundColor:Color.maincolor,
@@ -145,7 +107,6 @@ const styles = StyleSheet.create({
     marginHorizontal:"25%",
     height:45,
     borderRadius:10,
-
   },
   productcontainer:{
     flexDirection: 'row',
@@ -153,20 +114,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     paddingHorizontal: 16,
   },
-  buttonContainer: {
-    width: 100,
-    padding: 3,
-    backgroundColor: Color.maincolor,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginHorizontal:105
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+  
+  
     itemScrollview:{
-     height:350
+     height:"68%"
     },
     itemView:{
       width:120,
@@ -182,52 +133,19 @@ const styles = StyleSheet.create({
       margin:15,
       backgroundColor:Color.whitecolor 
     },
-    selectedtext:{
-        fontSize:15,
-        margin:15,
-        textAlign:"center",
-        fontWeight:"900",
-       
+    pickerView:{
+      borderWidth: 1,
+      borderColor: Color.maincolor,
+      borderRadius: 15,
+      overflow: 'hidden',
+      margin: 10,
+      height:40,
+      width:300,
+      justifyContent:"center",
+      fontStyle:"italic",
+      marginLeft:50
     },
-    selecteditemscroll:{
-      height:200,
-      width:"auto",
-      marginHorizontal:25,
-      borderColor:Color.maincolor,
-      borderWidth:1,
-      borderRadius:25,
-      marginBottom:5,
-      paddingBottom:10
-    },
-    headingview:{
-      flexDirection:'row',
-      justifyContent:'space-around',
-      width:"90%",
-      marginVertical:"2%",
-      height:35,
-      backgroundColor:Color.whitecolor,
-      alignItems:"center",
-      borderRadius:10
-    },
-    headingtext:{
-      fontWeight:"900"
-    },
-    selectitemview:{
-      flexDirection:'row',
-      justifyContent:'space-around',
-      alignItems:"center",
-      marginBottom:15,
-      width:"90%",
-      color:Color.whitecolor,
-      height:35,
-      backgroundColor:Color.whitecolor,
-      borderRadius:10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 5, 
-    }
+  
 })
 
 

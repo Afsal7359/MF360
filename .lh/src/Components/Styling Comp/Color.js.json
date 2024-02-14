@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/Components/Styling Comp/Color.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1707802557104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1707802563352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+export default colors={\r\n+    maincolor:\"#FFC300\",\r\n+    whitecolor:\"#ffff\",\r\n+    Green:\"#139218\",\r\n+    Grey:\"#808080\",\r\n+    Bla\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1707802569420,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+export default colors={\r\n+    maincolor:\"#FFC300\",\r\n+    whitecolor:\"#ffff\",\r\n+    Green:\"#139218\",\r\n+    Grey:\"#808080\",\r\n+    Black:\"#000\"\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1707802557104,
+            "name": "Commit-0",
+            "content": "export default colors={\r\n    maincolor:\"#FFC300\",\r\n    whitecolor:\"#ffff\",\r\n    Green:\"#139218\",\r\n    Grey:\"#808080\",\r\n    \r\n}"
+        }
+    ]
+}

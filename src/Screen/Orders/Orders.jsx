@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import QRScanner from '../Dashboard/QRScanner'
 
 const Orders = () => {
   return (
-    <View>
-      <Text>Orders</Text>
-    </View>
+    <SafeAreaView>
+      <QRScanner/>
+    </SafeAreaView>
   )
 }
 

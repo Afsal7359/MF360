@@ -23,12 +23,12 @@ const ScreenNavigations = () => {
     <Stack.Screen name='cart' component={Cart} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='Dashboard' component={Home} options={{headerShown:false}}/>
     <Stack.Screen name='creations' component={Creations} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
-    <Stack.Screen name='New Order' component={NewOrder} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
+    {/* <Stack.Screen name='New Order' component={NewOrder} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/> */}
     <Stack.Screen name='All Products' component={AllProducts} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen name='Order History' component={Orderhistory} options={{headerShown:true,headerStyle:{backgroundColor:Color.maincolor}}}/>
     <Stack.Screen
-        name="ssss"
-        component={Orders}
+        name="New Order"
+        component={NewOrder}
         options={({ navigation }) => ({
           headerTitle: 'New Order',
           headerStyle: {

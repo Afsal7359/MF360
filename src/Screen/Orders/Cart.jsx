@@ -1,44 +1,163 @@
-import { ScrollView, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
 import Color from '../../Components/Styling Comp/Color'
 import { useDispatch, useSelector } from 'react-redux';
-import Store from '../../Redux/Store';
+import plusicon from "../../../assets/plus.png"
+import minusicon  from "../../../assets/minus.png"
+import deleteicon  from "../../../assets/delete.png"
+import { addToCart, decreaseCartItem, removeFromCart } from '../../Redux/Cartreducer';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const Cart = ({navigation}) => {
 
     const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
   
   useEffect(() => {
-    console.log('Redux Store State:', Store.getState());
-    console.log('Cart Items:', cartItems);
     console.log('Cart items fetched:', cartItems);
   }, []);
+
+  const handleincreaseitem =(item)=>{
+    try {
+      dispatch(addToCart(item));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handledecreaseitem =(item)=>{
+    try {
+      dispatch(decreaseCartItem(item))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handledeleteitem =(item)=>{
+    try {
+      dispatch(removeFromCart(item))
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleSave = () => {
-    // Handle saving logic here
     console.log('Cart items saved:', cartItems);
-    // Clear the cart by dispatching a clear action
     dispatch({ type: 'CLEAR_CART' });
+    navigation.navigate('New Order')
   };
   return (
-    <View style={{marginBottom:55}}>
+    <SafeAreaView style={{marginBottom:55}}>
          <StatusBar
         animated={true}
         backgroundColor={Color.maincolor}
         barStyle={'light-content'} />
-       <ScrollView>
-      <Text>Cart Items:</Text>
+     
+     
+      <View style={[styles.cartview,styles.headingview]} >
+          <View style={styles.subcontainer1}>
+          <Text style={[styles.carttext,styles.headingtext]}>Name</Text>
+          </View>
+          <View style={styles.subcontainer1}>
+          <Text style={[styles.carttext,styles.headingtext]}>price</Text>
+          </View>
+          <View style={styles.subcontainer}>
+          <TouchableOpacity   style={styles.btnplus}>
+            {/* <Image source={minusicon} style={{ width: 25, height: 25 }}/> */}
+          </TouchableOpacity>
+              <Text style={[styles.carttext,styles.btnplus,styles.headingtext]}>quantity</Text>
+          <TouchableOpacity  style={styles.btnplus} >
+            {/* <Image source={plusicon} style={{ width: 25, height: 25 }}/> */}
+          </TouchableOpacity>
+          <TouchableOpacity  style={styles.btnplus} >
+            {/* <Image source={deleteicon} style={{ width: 25, height: 25 }}/> */}
+          </TouchableOpacity>
+          <Text  style={[styles.carttext,styles.btnplus,styles.headingtext]}>Total</Text>
+       </View>
+      </View>
+      <ScrollView style={styles.scrollview}>
       {cartItems.map((item, index) => (
-        <Text key={index}>{item.name}</Text>
+        <View style={styles.cartview}  key={index}>
+          <View style={styles.subcontainer1}>
+          <Text style={styles.carttext}>{item.name}</Text>
+          </View>
+          <View style={styles.subcontainer1}>
+          <Text style={styles.carttext}>{item.price}</Text>
+          </View>
+          <View style={styles.subcontainer}>
+          <TouchableOpacity onPress={()=>{handledecreaseitem(item)} }  style={styles.btnplus}>
+            <Image source={minusicon} style={{ width: 25, height: 25 }}/>
+          </TouchableOpacity>
+              <Text style={[styles.carttext,styles.btnplus]}>{item.quantity}</Text>
+          <TouchableOpacity onPress={()=>{handleincreaseitem(item)}} style={styles.btnplus} >
+            <Image source={plusicon} style={{ width: 25, height: 25 }}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{handledeleteitem(item)}} style={styles.btnplus} >
+            <Image source={deleteicon} style={{ width: 25, height: 25 }}/>
+          </TouchableOpacity>
+          <Text  style={[styles.carttext,styles.btnplus]}>{item.price*item.quantity}</Text>
+       </View>
+      </View>
+        
       ))}
     
     </ScrollView>
-    <TouchableOpacity onPress={handleSave}><Text>Clear Cart </Text></TouchableOpacity>
-    <TouchableOpacity onPress={()=>navigation.navigate('New Order')}><Text>Order Page </Text></TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.savebtn} onPress={handleSave}><Text>Save </Text></TouchableOpacity>
+    
+    </SafeAreaView>
   )
 }
 
 export default Cart
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  headingview:{
+    marginVertical:25,
+    shadowColor: Color.maincolor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 15, 
+  },
+  headingtext:{
+    fontWeight:"900"
+  },
+  scrollview:{
+    height:"80%"
+  },
+  btnplus:{
+    margin:10,
+  },
+  savebtn:{
+    backgroundColor:Color.maincolor,
+    width:"50%",
+    alignItems:"center",
+    justifyContent:"center",
+    alignContent:"center",
+    marginTop:10,
+    marginHorizontal:"25%",
+    height:45,
+    borderRadius:10,
+  },
+  subcontainer1:{
+    flexDirection:'row',
+    justifyContent:"center",
+    marginHorizontal:10,
+    alignItems:"center",
+    marginLeft:"5%"
+  },
+  subcontainer:{
+    flexDirection:'row',
+    right:0,
+    position:"absolute"
+  },
+  cartview:{
+    flexDirection:'row',
+    alignItems:'center',
+    backgroundColor:Color.maincolor,
+    margin:10,
+    borderRadius:8,
+    height:64
+  },
+  carttext:{
+    color:Color.Black,
+  },
+})

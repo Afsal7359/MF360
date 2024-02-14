@@ -6,7 +6,6 @@ import productsimage from "../../../assets/product.png";
 import creationsimage from "../../../assets/creations.png";
 import Color from '../../Components/Styling Comp/Color';
 
-
 const Home = ({navigation}) => {
   const [user,setuser]=useState("Afsal")
   return (
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
   cardText:{
       fontSize:15,
       textAlign:"center",
+      color:Color.Black
   },
   neworderimg:{
       marginHorizontal:35,

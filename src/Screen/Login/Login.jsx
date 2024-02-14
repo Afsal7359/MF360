@@ -7,19 +7,21 @@ const Login = ({navigation}) => {
     const [password,setPassword]=useState('')
   return (
     <ScrollView>
-    <StatusBar style="light" translucent={false} backgroundColor={"#000"}/>
+    <StatusBar  barStyle="dark-content" translucent={false} backgroundColor={Color.maincolor}/>
     <View style={styles.topcircle}></View>
 <Text style={styles.WelcomeText}>Welcome !</Text>
 <Text style={styles.LoginText} >Login</Text>
 <TextInput
   style={styles.Inputfield}
   placeholder="your name"
+  placeholderTextColor={Color.Black} 
   onChangeText={item => setUserName(item)}
   defaultValue={username}
 />
  <TextInput
   style={styles.Inputfield2}
   placeholder="Password"
+  placeholderTextColor={Color.Black} 
   onChangeText={item => setPassword(item)}
   defaultValue={password}
 />
@@ -44,10 +46,12 @@ const styles = StyleSheet.create({
         fontSize:24,
         marginLeft:25,
         paddingTop:35,
+        color:Color.Black
     },
     LoginText:{
         fontSize:26,
         marginLeft:25,
+        color:Color.Black
     },
     Inputfield:{
         height:45,
@@ -58,8 +62,7 @@ const styles = StyleSheet.create({
         borderColor: Color.maincolor,
         borderWidth:2,
         paddingLeft:25,
-        borderRadius:10
-        
+        borderRadius:10,
     },
     Inputfield2:{
         height:45,
