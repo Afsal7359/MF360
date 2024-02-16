@@ -1,45 +1,73 @@
 import { View, Text, StyleSheet, ScrollView, Touchable,SafeAreaView,Button,Modal, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SearchBar } from 'react-native-elements'
-import data from '../../Components/Styling Comp/Data'
 import Color from '../../Components/Styling Comp/Color'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../../Redux/Cartreducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { AddProductdata, addToCart } from '../../Redux/Cartreducer'
 import { Picker } from '@react-native-picker/picker'
+import { getproducts } from '../../Api/Products'
 
 const NewOrder = ({navigation}) => {
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState('');
   const [District, setDistrict] = useState('option1');
-  const Data = data && data ? data : [];
+  // const Data = data && data ? data : [];
+  const [Data,setData]=useState([])
   const [search,setSearch]=useState('');
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+ 
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  // const ProductData = useSelector((state) => state.cart.ProductData);
+  // console.log(ProductData,"poroooooooooooooooooooo");
+  console.log(cartItems);
   const Addtocart = (item) => {
-    console.log(item);
+    console.log(item,"selected item");
+    //add to redux
     dispatch(addToCart(item));
-    ToastAndroid.show(`${item.name}  Added to cart`,500 , ToastAndroid.CENTER)
+    console.log(cartItems,"caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    //filter fetched data and selected item
+    const filterDatass = cartItems.filter((cartItem) => cartItem.name === item.name);
+    console.log(filterDatass, "filterData");
+   ToastAndroid.show(`${filterDatass[0]?filterDatass[0].quantity:[1]}  ${item.name}  Added to cart`,100, ToastAndroid.SHORT)
+    
   };
+
+  
+  const productdatafetch =async()=>{
+    try {
+      if(Data.length===0){
+      const response = await getproducts()
+      if (response.success){
+        setData(response.data)
+        // dispatch(AddProductdata(Data));
+        console.log(Data,"daaata");
+      }
+    }else{
+      console.log("already fetched");
+    }
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+    }
+  }
+
     useEffect(() => {
-      // Update filtered data whenever search text changes
       filterData();
-    }, [search, data]);
+      productdatafetch();
+    }, [search]);
 
     const filterData = () => {
-      const filtered = data.filter((item) =>
+      const filtered = Data.filter((item) =>
         item.name.toLowerCase().includes(search.toLowerCase())
       );
-      setFilteredData(filtered);
+      setData(filtered)
     };
 
   
   return (
     <SafeAreaView>
       <View  style={styles.pickerView}>
-      <Picker style={{color:Color.Black}} value={District}   onValueChange={(item) =>setDistrict(item)}>
-            <Picker.Item label="Select Shop" value="option1" />
-            <Picker.Item label="Kannur fsdf sdfsaf sfsdfdsf fsfds dsfdsfds fdsfdfsf fgdsfds fdsefds fdsfs dsfds fdsf" value="option2" />
-            <Picker.Item label="Kasargod" value="option3" />
-        </Picker>
+     <TouchableOpacity><Text style={{textAlign:"center",fontWeight:"900"}}>Select Shop</Text></TouchableOpacity>
       </View>
   
     <View style={{alignItems:"center"}}>
@@ -52,14 +80,14 @@ const NewOrder = ({navigation}) => {
          backgroundColor: 'transparent', 
          borderBottomColor: 'transparent', 
          borderTopColor: 'transparent',
-         paddingHorizontal:30,
+         paddingHorizontal:10,
         
        }}
        inputContainerStyle={{
          backgroundColor: Color.whitecolor, 
          borderRadius: 10,
-         height: 40, 
-         width:300,
+         height: 50, 
+         width:"100%",
          shadowColor: '#000',
          shadowOffset: { width: 0, height: 2 },
          shadowOpacity: 0.5,
@@ -77,7 +105,7 @@ const NewOrder = ({navigation}) => {
    
     <ScrollView style={styles.itemScrollview}>
     <View style={styles.productcontainer}>
-    {filteredData.map((item, index) => (
+    {Data.map((item, index) => (
       <TouchableOpacity key={index} style={styles.itemView} onPress={()=>{Addtocart(item)}}>
         <Text style={styles.itemText}> {item.name}</Text>
         <Text style={styles.itemText}>₹ {item.price}</Text>
@@ -134,16 +162,15 @@ const styles = StyleSheet.create({
       backgroundColor:Color.whitecolor 
     },
     pickerView:{
-      borderWidth: 1,
+      borderWidth: 3,
       borderColor: Color.maincolor,
-      borderRadius: 15,
-      overflow: 'hidden',
+      borderRadius: 55,
       margin: 10,
       height:40,
-      width:300,
+      width:"100%",
       justifyContent:"center",
       fontStyle:"italic",
-      marginLeft:50
+      marginHorizontal:"auto"
     },
   
 })

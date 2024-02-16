@@ -25,10 +25,16 @@ export const clearCart = () => {
     type: 'CLEAR_CART',
   };
 };
+export const AddProductdata =()=>{
+  return {
+    type: 'PRODUCT_DATA'
+  }
+}
 
 // reducers.js
 const initialState = {
   cartItems: [],
+  ProductData:[],
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -53,6 +59,8 @@ const cartReducer = (state = initialState, action) => {
           cartItems: [...state.cartItems, { ...newItem, quantity: 1 }],
         };
       }
+    
+
 
     case 'REMOVE_FROM_CART':
       const itemToRemove = action.payload;
@@ -83,7 +91,12 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: [],
       };
-
+      case 'PRODUCT_DATA':
+        // Store product data from the database
+        return {
+          ...state,
+          ProductData: action.payload,
+        };
     default:
       return state;
   }

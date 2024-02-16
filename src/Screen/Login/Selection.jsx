@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     
     pickerView:{
       borderWidth: 1,
-      borderColor: 'gray',
+      borderColor: Color.maincolor,
       borderRadius: 15,
       overflow: 'hidden',
       margin: 10,

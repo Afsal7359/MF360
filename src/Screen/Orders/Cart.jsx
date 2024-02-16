@@ -1,4 +1,4 @@
-import { Image, ScrollView, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, StatusBar, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
 import Color from '../../Components/Styling Comp/Color'
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,17 +32,37 @@ const Cart = ({navigation}) => {
       console.log(error);
     }
   }
+
   const handledeleteitem =(item)=>{
     try {
-      dispatch(removeFromCart(item))
+      Alert.alert('Confirm', 'Are you sure you want to delete the item from the cart ?', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'Delete', onPress: () =>dispatch(removeFromCart(item))},
+      ])
+      
     } catch (error) {
       console.log(error);
     }
   }
   const handleSave = () => {
-    console.log('Cart items saved:', cartItems);
-    dispatch({ type: 'CLEAR_CART' });
-    navigation.navigate('New Order')
+    Alert.alert('Confirm','Are you sure you want to save the item ?',[
+      {
+        text:'Cancel',
+        onPress :()=>console.log('Cancel Pressed') ,
+        style:'cancel',
+      },{
+        text:'Save',
+        onPress: () => {
+          dispatch({ type: 'CLEAR_CART' });
+          navigation.navigate('New Order');
+        },
+        style:'save',
+      }
+    ])
   };
   return (
     <SafeAreaView style={{marginBottom:55}}>
