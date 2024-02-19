@@ -11,6 +11,7 @@ export const addshop = async(payload)=>{
 }
 export const getshop = async()=>{
     try {
+        console.log("hhhhhhhhai");
         const response = await instance.get('shop/get')
         return response.data
     } catch (error) {

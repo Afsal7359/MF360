@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SearchBar } from 'react-native-elements'
 import Color from '../../Components/Styling Comp/Color';
@@ -75,22 +75,27 @@ const AllProducts = () => {
        />
       
       </View>
-      <View style={styles.prohead}>
-        <Text style={styles.protext}>Id</Text>
-        <Text style={styles.protext} >Product</Text>
-        <Text style={styles.protext}>Stock</Text>
-        <Text style={styles.protext}>Price</Text>
-      </View>
-      <ScrollView >
-      {productdata.map((item,index)=>(
-        <TouchableOpacity key={index} style={styles.proview} >
-         <Text> {item.id}</Text> 
-        <Text> {item.name}</Text>
-        <Text> {item.price}</Text>
-        <Text> {item.stock}</Text>
-      </TouchableOpacity>
-      ))}
-      </ScrollView>
+      { !productdata ? (
+       <ActivityIndicator  size={65} color={Color.maincolor} style={{position:"absolute", top:300,left:165}}/>
+      ):( <View style={styles.mainview}>
+        <View style={styles.prohead}>
+          <Text style={styles.protext}>Id</Text>
+          <Text style={styles.protext} >Product</Text>
+          <Text style={styles.protext}>Stock</Text>
+          <Text style={styles.protext}>Price</Text>
+        </View>
+        <ScrollView style={styles.scroll}>
+        {productdata.map((item,index)=>(
+          <TouchableOpacity key={index} style={styles.proview} >
+           <Text> {item.id}</Text> 
+          <Text> {item.name}</Text>
+          <Text> {item.price}</Text>
+          <Text> {item.stock}</Text>
+        </TouchableOpacity>
+        ))}
+        </ScrollView>
+        </View>)
+    }
     </SafeAreaView>
   )
 }
@@ -98,10 +103,29 @@ const AllProducts = () => {
 export default AllProducts
 
 const styles = StyleSheet.create({
+  scroll:{
+    height:"70%"
+  },
     prohead:{
+      
+        marginTop:"5%",
         flexDirection:'row',
         justifyContent:"space-around",
-        marginTop:"5%",
+        borderRadius:10,
+        marginTop:25,
+        paddingVertical:10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 5, 
+        backgroundColor:Color.whitecolor,
+        marginHorizontal:10,
+        height:95,
+        alignItems:"center",
+    },
+    mainview:{
+
     },
     protext:{
         fontWeight:"900"

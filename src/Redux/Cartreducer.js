@@ -6,6 +6,7 @@ export const addToCart = (item) => {
   };
 };
 
+
 export const removeFromCart = (item) => {
   return {
     type: 'REMOVE_FROM_CART',
@@ -27,39 +28,77 @@ export const clearCart = () => {
 };
 export const AddProductdata =()=>{
   return {
-    type: 'PRODUCT_DATA'
+    type: 'PRODUCT_DATA',
+
   }
 }
+export const Increasequantity =(item)=>{
+  return {
+    type: 'INCREASE_QUANTITY',
+    payload:item,
+  };
+};
+export const AddselectedShop =(item)=>{
+ 
+  return {
+    type: 'ADD_SELECTED_SHOP',
+    payload:item,
+  }
+}
+
+export const RemoveselectedShop =()=>{
+  return {
+    type: 'REMOVE_SELECTED_SHOP'
+  }
+}
+
 
 // reducers.js
 const initialState = {
   cartItems: [],
   ProductData:[],
+  selectedshop:[],
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
-      const newItem = action.payload;
-      const existingItemIndex = state.cartItems.findIndex(item => item.name === newItem.name);
+      // Check if the product is already in the cart
+      const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
 
       if (existingItemIndex !== -1) {
-        // If item already exists, increment the quantity
+        // If it exists, update the quantity
         const updatedCartItems = [...state.cartItems];
-        updatedCartItems[existingItemIndex].quantity += 1;
+        updatedCartItems[existingItemIndex].quantity += action.payload.quantity;
 
         return {
           ...state,
           cartItems: updatedCartItems,
         };
       } else {
-        // If item doesn't exist, add it to the cart with quantity 1
+        // If it doesn't exist, add a new item
         return {
           ...state,
-          cartItems: [...state.cartItems, { ...newItem, quantity: 1 }],
+          cartItems: [...state.cartItems, action.payload],
         };
       }
-    
+
+      case 'INCREASE_QUANTITY':
+       
+        // Increase the quantity for a specific product in the cart
+        const increasedItems = state.cartItems.map((item) => {
+          if (item.name === action.payload.name) {
+          
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return item;
+        });
+  
+        return {
+          ...state,
+          cartItems: increasedItems,
+        };
+
 
 
     case 'REMOVE_FROM_CART':
@@ -84,6 +123,17 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: updatedCartItemsDecrease,
       };
+
+      case 'ADD_SELECTED_SHOP':
+      return {
+        ...state,
+        selectedshop: action.payload,
+      };
+      case 'cz':
+        return {
+          ...state,
+          selectedShop: [],
+        };
 
     case 'CLEAR_CART':
       // Clear the entire cart

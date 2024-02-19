@@ -4,35 +4,60 @@ import { Button } from 'react-native-elements';
 import Color from '../../Components/Styling Comp/Color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addarea } from '../../Api/Area';
+import { Toast } from 'toastify-react-native';
 
 const AddArea = () => {
   const [area, setArea] = useState('');
   const [district, setDistrict] = useState('');
   const [fetchDatas, setFetchData] = useState([]);
 
+  const validatearea = () => {
+    try {
+      if (!area) {
+        Toast.warn("please enter a Area")
+        return false;
+      }return true;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const validatedistrict = () => {
+    try {
+      if (!district) {
+        Toast.warn("please enter a District")
+        return false;
+      }return true
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const handleSubmit = async () => {
     try {
-      // Create FormData object with product information
-      const formData = {
-        name: area,
-        district: district,
-      };
-  
-      console.log(formData, "formData");
-  
-      //  addproduct function
-      const response = await addarea(formData);
+      if(validatearea() && validatedistrict()){
+        const formData = {
+          name: area,
+          district: district,
+        };
+    
+        console.log(formData, "formData");
+    
+        //  addproduct function
+        const response = await addarea(formData);
+        
+        // Check the status in the response
+        if (response.success) {
+         setArea('')
+         setDistrict('')
+          Toast.success(response.message)
+        } else {
+        Toast.warn(response.message)
+        }
       
-      // Check the status in the response
-      if (response.success) {
-       setArea('')
-       setDistrict('')
-        // Show a toast message if the status is "success"
-        ToastAndroid.show(response.message, ToastAndroid.LONG);
-      } else {
-        // Product already exists or other errors
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+     
       }
+        
     } catch (error) {
       console.log(error);
       ToastAndroid.show(error, ToastAndroid.SHORT);
@@ -48,12 +73,14 @@ const AddArea = () => {
           style={styles.input}
           value={area}
           onChangeText={(text) => setArea(text)}
+          onBlur={validatearea}
         />
         <TextInput
           placeholder="district"
           style={styles.input}
           value={district}
           onChangeText={(text) => setDistrict(text)}
+          onBlur={validatedistrict}
         />
         <Button buttonStyle={styles.button} title="Submit" onPress={handleSubmit} />
       </View>

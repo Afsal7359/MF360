@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Touchable, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Touchable, TouchableOpacity, Image, ScrollView, ActivityIndicator,  } from 'react-native'
 import imageneworder from "../../../assets/neworder.png"
 import orderhistoryimg from "../../../assets/ordershistory.png"
 import productsimage from "../../../assets/product.png";
 import creationsimage from "../../../assets/creations.png";
 import Color from '../../Components/Styling Comp/Color';
+import CircularProgress from 'react-native-circular-progress';
 
 const Home = ({navigation}) => {
   const [user,setuser]=useState("Afsal")
@@ -12,10 +13,10 @@ const Home = ({navigation}) => {
     <ScrollView>
     {/* <StatusBar style="auto" translucent={false} backgroundColor={Color.maincolor}/> */}
     <View style={styles.topview}> 
-    {/* <View style={styles.progressbar}>
-    <CircularProgress
+    <View style={styles.progressbar}>
+    {/* <CircularProgress
       value={15666}
-      radius={50}
+      radius={60}
       duration={2000}
       activeStrokeColor={'#f39c12'}
       inActiveStrokeColor={'#fff'}
@@ -24,7 +25,11 @@ const Home = ({navigation}) => {
       title={"Target"}
       titleColor={'white'}
       titleStyle={{fontWeight: 'bold'}}
-      /></View> */}
+      /> */}
+
+    
+
+      </View>
          <Text style={styles.nametext}>{user}</Text>
     </View>
     <View style={styles.cardview}>
@@ -47,6 +52,9 @@ const Home = ({navigation}) => {
         <Text style={styles.cardText}>Creations</Text>
     </TouchableOpacity>
     </View>
+    <View>
+    
+      </View>
 </ScrollView>
   )
 }

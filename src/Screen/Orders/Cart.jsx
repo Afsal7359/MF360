@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import plusicon from "../../../assets/plus.png"
 import minusicon  from "../../../assets/minus.png"
 import deleteicon  from "../../../assets/delete.png"
-import { addToCart, decreaseCartItem, removeFromCart } from '../../Redux/Cartreducer';
+import { Increasequantity, addToCart, decreaseCartItem, removeFromCart } from '../../Redux/Cartreducer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -19,8 +19,9 @@ const Cart = ({navigation}) => {
   }, []);
 
   const handleincreaseitem =(item)=>{
+    console.log(item);
     try {
-      dispatch(addToCart(item));
+      dispatch(Increasequantity(item));
     } catch (error) {
       console.log(error);
     }
@@ -97,21 +98,23 @@ const Cart = ({navigation}) => {
       {cartItems.map((item, index) => (
         <View style={styles.cartview}  key={index}>
           <View style={styles.subcontainer1}>
-          <Text style={styles.carttext}>{item.name}</Text>
+          <Text style={styles.carttext}>{item.name.substring(0, 10)}...</Text>
+
           </View>
           <View style={styles.subcontainer1}>
           <Text style={styles.carttext}>{item.price}</Text>
           </View>
           <View style={styles.subcontainer}>
           <TouchableOpacity onPress={()=>{handledecreaseitem(item)} }  style={styles.btnplus}>
-            <Image source={minusicon} style={{ width: 25, height: 25 }}/>
+            <Image source={minusicon} style={{ width: 20, height: 20 }}/>
           </TouchableOpacity>
+          
               <Text style={[styles.carttext,styles.btnplus]}>{item.quantity}</Text>
           <TouchableOpacity onPress={()=>{handleincreaseitem(item)}} style={styles.btnplus} >
-            <Image source={plusicon} style={{ width: 25, height: 25 }}/>
+            <Image source={plusicon} style={{ width: 20, height: 20 }}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>{handledeleteitem(item)}} style={styles.btnplus} >
-            <Image source={deleteicon} style={{ width: 25, height: 25 }}/>
+            <Image source={deleteicon} style={{ width: 20, height: 20 }}/>
           </TouchableOpacity>
           <Text  style={[styles.carttext,styles.btnplus]}>{item.price*item.quantity}</Text>
        </View>
@@ -160,7 +163,6 @@ const styles = StyleSheet.create({
   subcontainer1:{
     flexDirection:'row',
     justifyContent:"center",
-    marginHorizontal:10,
     alignItems:"center",
     marginLeft:"5%"
   },

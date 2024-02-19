@@ -3,43 +3,72 @@ import React, { useState } from 'react'
 import { Button } from 'react-native-elements'
 import Color from '../../Components/Styling Comp/Color'
 import { addproduct } from '../../Api/Products'
+import { Toast } from 'toastify-react-native'
 
 const AddProduct = () => {
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState("");
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productstock,setproductstock]=useState('');
 
-  const handleSubmit = async () => {
+  const validateproduct =()=>{
     try {
-      // Create FormData object with product information
-      const formData = {
-        id: productId,
-        name: productName,
-        price: productPrice,
-        stock:productstock,
-      };
-  
-      console.log(formData, "formData");
-  
-      //  addproduct function
-      const response = await addproduct(formData);
-      
-      // Check the status in the response
-      if (response.success) {
-        setProductId('')
-        setProductName('')
-        setProductPrice('')
-        setproductstock('')
-        // Show a toast message if the status is "success"
-        ToastAndroid.show(response.message, ToastAndroid.LONG);
-      } else {
-        // Product already exists or other errors
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      }
+      if(!productName){
+        Toast.warn( "Please enter the product name");
+        return false;
+      }return true
     } catch (error) {
       console.log(error);
-      ToastAndroid.show(error, ToastAndroid.SHORT);
+    }
+  }
+  const validateprice =()=>{
+    try {
+      if(!productPrice){
+        Toast.warn("Please enter a Price")
+        return false;
+      }else if(productPrice < 0){
+        Toast.warn("Please enter a Valide Price")
+        return false;
+      }return true
+    } catch (error) {
+      console.log(error);
+    }
+  }
+ 
+
+  const handleSubmit = async () => {
+    try {
+      if(validateproduct() && validateprice()){
+          // Create FormData object with product information
+          const formData = {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            stock:productstock,
+          };
+
+          console.log(formData, "formData");
+
+          //  addproduct function
+          const response = await addproduct(formData);
+
+          // Check the status in the response
+          if (response.success) {
+            setProductId('')
+            setProductName('')
+            setProductPrice('')
+            setproductstock('')
+            // Show a toast message if the status is "success"
+            Toast.success(response.message);
+          } else {
+            // Product already exists or other errors
+            Toast.error(response.message)
+          }
+      }
+     
+    } catch (error) {
+      console.log(error);
+      Toast.error(error);
     }
   };
   
@@ -51,23 +80,28 @@ const AddProduct = () => {
         style={styles.input}
         value={productId}
         onChangeText={(text) => setProductId(text)}
+        
       />
       <TextInput
         placeholder="Product Name"
         style={styles.input}
         value={productName}
         onChangeText={(text) => setProductName(text)}
+        onBlur={validateproduct}
       />
       <TextInput
         placeholder="Product Price"
         style={styles.input}
         value={productPrice}
+        keyboardType="numeric"
         onChangeText={(text) => setProductPrice(text)}
+        onBlur={validateprice}
       />
        <TextInput
         placeholder="Product stock" 
         style={styles.input}
         value={productstock}
+        keyboardType="numeric"
         onChangeText={(text) => setproductstock(text)}
       />
       <Button
